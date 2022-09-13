@@ -10,8 +10,10 @@ import SearchFeed from "./components/SearchFeed";
 
 const App = () => (
   <BrowserRouter>
-    <Box sx={{ backgroundColor: '#000' }}>
+    <Box sx={{ backgroundColor: "white" }}>
+   
 <Navbar/>
+<hr/>
       <Routes>
         <Route exact path='/' element={<Feed />} />
         <Route path='/video/:id' element={<VideoDetail />} />
