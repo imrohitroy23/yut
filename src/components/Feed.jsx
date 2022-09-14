@@ -3,17 +3,18 @@ import { Box, Stack, Typography } from "@mui/material";
 import SideBar from "./SideBar";
 import Videos from './Videos'
 import { FetchApi } from "../utils/FetchApi";
-const Feed = () => {
+const Feed = ({setProgress}) => {
 
   const [selectedCategory, setSelectedCategory] = useState("New");
   const [videos, setVideos] = useState(null);
-
+setProgress(0)
   useEffect(() => {
 
     FetchApi(`search?part=snippet&q=${selectedCategory}`)
       .then((data) => setVideos(data.items))
+      setProgress(30)
     }, [selectedCategory]);
-
+    setProgress(100)
   return (
     <Stack sx={{ flexDirection: { sx: "column", md: "row" } }}>
       <Box sx={{ height: { sx: "auto", md: "92vh" }, borderRight: "1px solid #3d3d3d", px: { sx: 0, md: 2 } }}>

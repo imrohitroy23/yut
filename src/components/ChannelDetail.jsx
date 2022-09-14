@@ -5,19 +5,24 @@ import { useParams } from "react-router-dom";
 import { FetchApi } from "../utils/FetchApi";
 import ChannelCard from "./ChannelCard";
 import Videos from "./Videos";
-const ChannelDetail = () => {
+const ChannelDetail = ({setProgress}) => {
   const [channelDetail, setChannelDetail] = useState(null);
   const { id } = useParams();
   const [videos, setVideos] = useState([]);
   console.log("adding here" + channelDetail, "videos", videos);
   useEffect(() => {
+    setProgress(0)
     FetchApi(`channels?part=snippet&id=${id}`).then((data) =>
       setChannelDetail(data?.items[0])
+    
     );
+    setProgress(30)
     FetchApi(`search?channelId=${id}&part=snippet%2Cid&order=date`).then((data) =>
       setVideos(data?.items)
     );
+    setProgress(50)
   }, [id]);
+  setProgress(100)
 
   return (
     <Box minHeight="95vh">

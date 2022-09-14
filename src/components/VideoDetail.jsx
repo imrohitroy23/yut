@@ -6,18 +6,21 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { FetchApi } from '../utils/FetchApi'
 import Videos from './Videos'
 import Loader from './Loader'
-const VideoDetail = () => {
+const VideoDetail = ({setProgress}) => {
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
+    setProgress(0)
     FetchApi(`videos?part=snippet,statistics&id=${id}`)
       .then((data) => setVideoDetail(data.items[0]))
-
+      setProgress(30)
       FetchApi(`search?part=snippet&relatedToVideoId=${id}&type=video`)
       .then((data) => setVideos(data.items))
+      setProgress(80)
   }, [id]);
+  setProgress(100)
 
   if(!videoDetail?.snippet) return <Loader />;
 
